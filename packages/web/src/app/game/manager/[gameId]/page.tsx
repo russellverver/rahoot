@@ -101,12 +101,12 @@ const ManagerGame = () => {
       break
 
     case STATUS.SHOW_QUESTION:
-      component = <Question data={status.data} />
+      component = <Question data={status.data} manager />
 
       break
 
     case STATUS.SELECT_ANSWER:
-      component = <Answers data={status.data} />
+      component = <Answers data={status.data} manager />
 
       break
 

@@ -16,10 +16,16 @@ const Manager = () => {
 
   const [isAuth, setIsAuth] = useState(false)
   const [quizzList, setQuizzList] = useState<QuizzWithId[]>([])
+  const [qlabConfig, setQlabConfig] = useState<{ ip: string; port: number } | null>(null)
 
   useEvent("manager:quizzList", (quizzList) => {
     setIsAuth(true)
     setQuizzList(quizzList)
+    socket?.emit("manager:getQlabConfig")
+  })
+
+  useEvent("manager:qlabConfig", (config) => {
+    setQlabConfig(config)
   })
 
   useEvent("manager:gameCreated", ({ gameId, inviteCode }) => {
@@ -31,15 +37,27 @@ const Manager = () => {
   const handleAuth = (password: string) => {
     socket?.emit("manager:auth", password)
   }
+
   const handleCreate = (quizzId: string) => {
     socket?.emit("game:create", quizzId)
+  }
+
+  const handleSaveQlab = (ip: string, port: number) => {
+    socket?.emit("manager:setQlabConfig", { ip, port })
   }
 
   if (!isAuth) {
     return <ManagerPassword onSubmit={handleAuth} />
   }
 
-  return <SelectQuizz quizzList={quizzList} onSelect={handleCreate} />
+  return (
+    <SelectQuizz
+      quizzList={quizzList}
+      onSelect={handleCreate}
+      qlabConfig={qlabConfig}
+      onSaveQlab={handleSaveQlab}
+    />
+  )
 }
 
 export default Manager

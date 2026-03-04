@@ -4,19 +4,29 @@ import { Player } from "@rahoot/common/types/game"
 import { ManagerStatusDataMap } from "@rahoot/common/types/game/status"
 import { useEvent, useSocket } from "@rahoot/web/contexts/socketProvider"
 import { useManagerStore } from "@rahoot/web/stores/manager"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import QRCode from "react-qr-code"
+import Link from "next/link"
 
 type Props = {
   data: ManagerStatusDataMap["SHOW_ROOM"]
 }
 
-const Room = ({ data: { text, inviteCode } }: Props) => {
+const Room = ({ data: { text, inviteCode: initialInviteCode } }: Props) => {
   const { gameId } = useManagerStore()
   const { socket, webUrl } = useSocket()
   const { players } = useManagerStore()
   const [playerList, setPlayerList] = useState<Player[]>(players)
   const [totalPlayers, setTotalPlayers] = useState(0)
+  const [inviteCode, setInviteCode] = useState(initialInviteCode)
+  const [secondsLeft, setSecondsLeft] = useState(30)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSecondsLeft((s) => (s <= 1 ? 30 : s - 1))
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [])
 
   useEvent("manager:newPlayer", (player) => {
     setPlayerList([...playerList, player])
@@ -32,6 +42,11 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
 
   useEvent("game:totalPlayers", (total) => {
     setTotalPlayers(total)
+  })
+
+  useEvent("manager:inviteCodeUpdate", ({ code, expiresAt }) => {
+    setInviteCode(code)
+    setSecondsLeft(Math.round((expiresAt - Date.now()) / 1000))
   })
 
   const handleKick = (playerId: string) => () => {
@@ -57,6 +72,15 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
           <div className="game-pin-in flex flex-col justify-center rounded-md bg-white px-6 py-4 text-center md:rounded-l-none md:text-left">
             <p className="text-2xl font-bold">Game PIN:</p>
             <p className="text-6xl font-extrabold">{inviteCode}</p>
+            <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-gray-200">
+              <div
+                className="h-full rounded-full bg-amber-500 transition-all duration-1000"
+                style={{ width: `${(secondsLeft / 30) * 100}%` }}
+              />
+            </div>
+            <p className="mt-1 text-xs text-gray-400">
+              Nieuwe PIN over {secondsLeft}s
+            </p>
           </div>
         </div>
 
@@ -77,6 +101,14 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
           Players Joined: {totalPlayers}
         </span>
       </div>
+
+      <Link
+        href={`/spectator?pin=${inviteCode}`}
+        target="_blank"
+        className="mb-4 rounded-md bg-amber-500 px-5 py-2 text-lg font-bold text-white shadow hover:bg-amber-400"
+      >
+        Open leaderboard scherm
+      </Link>
 
       <div className="flex flex-wrap gap-3">
         {playerList.map((player) => (

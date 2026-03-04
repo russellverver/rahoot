@@ -7,14 +7,35 @@ import useSound from "use-sound"
 
 type Props = {
   data: CommonStatusDataMap["SHOW_QUESTION"]
+  manager?: boolean
 }
 
-const Question = ({ data: { question, image, cooldown } }: Props) => {
+const Question = ({ data: { question, image, cooldown }, manager }: Props) => {
   const [sfxShow] = useSound(SFX_SHOW_SOUND, { volume: 0.5 })
 
   useEffect(() => {
     sfxShow()
   }, [sfxShow])
+
+  if (!manager) {
+    return (
+      <section className="relative mx-auto flex h-full w-full max-w-lg flex-1 flex-col items-center justify-center px-4">
+        <div className="relative w-full">
+          <img src="/vraag-box.png" alt="" className="w-full" draggable={false} />
+          <div className="absolute inset-0 flex items-center justify-center px-8 pt-4">
+            <p className="text-center text-lg font-bold text-white drop-shadow-lg md:text-xl"
+              style={{ display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical", overflow: "hidden" }}
+            >
+              {question}
+            </p>
+          </div>
+        </div>
+        {Boolean(image) && (
+          <img alt={question} src={image} className="mt-4 max-h-40 w-auto rounded-md" />
+        )}
+      </section>
+    )
+  }
 
   return (
     <section className="relative mx-auto flex h-full w-full max-w-7xl flex-1 flex-col items-center px-4">

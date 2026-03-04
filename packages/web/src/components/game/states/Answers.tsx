@@ -15,12 +15,16 @@ import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import useSound from "use-sound"
 
+const ANSWER_IMAGES = ["/antwoord-a.png", "/antwoord-b.png", "/antwoord-c.png", "/antwoord-d.png"]
+
 type Props = {
   data: CommonStatusDataMap["SELECT_ANSWER"]
+  manager?: boolean
 }
 
 const Answers = ({
   data: { question, answers, image, audio, video, time, totalPlayer },
+  manager,
 }: Props) => {
   const { gameId }: { gameId?: string } = useParams()
   const { socket } = useSocket()
@@ -75,6 +79,54 @@ const Answers = ({
     sfxPop()
   })
 
+  if (!manager) {
+    return (
+      <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-hidden px-3 pb-2">
+        {/* Vraag box */}
+        <div className="relative flex-shrink-0">
+          <img src="/vraag-box.png" alt="" className="w-full" draggable={false} />
+          <div className="absolute inset-0 flex items-center justify-center px-10 pt-3">
+            <p
+              className="text-center text-sm font-bold text-white drop-shadow-lg sm:text-base"
+              style={{ display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}
+            >
+              {question}
+            </p>
+          </div>
+        </div>
+
+        {/* Tijd / antwoorden teller */}
+        <div className="flex flex-shrink-0 justify-between px-1 text-sm font-bold text-white">
+          <div className="flex items-center gap-1 rounded-full bg-black/40 px-3 py-1">
+            <span>⏱ {cooldown}s</span>
+          </div>
+          <div className="flex items-center gap-1 rounded-full bg-black/40 px-3 py-1">
+            <span>{totalAnswer}/{totalPlayer} antwoorden</span>
+          </div>
+        </div>
+
+        {/* 2×2 antwoord grid */}
+        <div className="grid min-h-0 flex-1 grid-cols-2 gap-2" style={{ gridTemplateRows: "1fr 1fr" }}>
+          {answers.map((answer, key) => (
+            <button
+              key={key}
+              onClick={handleAnswer(key)}
+              className="relative h-full w-full"
+            >
+              <img src={ANSWER_IMAGES[key]} alt="" className="h-full w-full object-contain" draggable={false} />
+              <span
+                className="absolute right-2 left-[28%] top-1/2 -translate-y-1/2 text-center text-xs font-bold text-white drop-shadow-lg sm:text-sm"
+                style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}
+              >
+                {answer}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="flex h-full flex-1 flex-col justify-between">
       <div className="mx-auto inline-flex h-full w-full max-w-7xl flex-1 flex-col items-center justify-center gap-5">
@@ -83,29 +135,15 @@ const Answers = ({
         </h2>
 
         {Boolean(audio) && !player && (
-          <audio
-            className="m-4 mb-2 w-auto rounded-md"
-            src={audio}
-            autoPlay
-            controls
-          />
+          <audio className="m-4 mb-2 w-auto rounded-md" src={audio} autoPlay controls />
         )}
 
         {Boolean(video) && !player && (
-          <video
-            className="m-4 mb-2 aspect-video max-h-60 w-auto rounded-md px-4 sm:max-h-100"
-            src={video}
-            autoPlay
-            controls
-          />
+          <video className="m-4 mb-2 aspect-video max-h-60 w-auto rounded-md px-4 sm:max-h-100" src={video} autoPlay controls />
         )}
 
         {Boolean(image) && (
-          <img
-            alt={question}
-            src={image}
-            className="mb-2 max-h-60 w-auto rounded-md px-4 sm:max-h-100"
-          />
+          <img alt={question} src={image} className="mb-2 max-h-60 w-auto rounded-md px-4 sm:max-h-100" />
         )}
       </div>
 
@@ -117,9 +155,7 @@ const Answers = ({
           </div>
           <div className="flex flex-col items-center rounded-full bg-black/40 px-4 text-lg font-bold">
             <span className="translate-y-1 text-sm">Answers</span>
-            <span>
-              {totalAnswer}/{totalPlayer}
-            </span>
+            <span>{totalAnswer}/{totalPlayer}</span>
           </div>
         </div>
 

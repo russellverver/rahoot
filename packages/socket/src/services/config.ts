@@ -1,4 +1,4 @@
-import { QuizzWithId } from "@rahoot/common/types/game"
+import { Quizz, QuizzWithId } from "@rahoot/common/types/game"
 import fs from "fs"
 import { resolve } from "path"
 
@@ -94,6 +94,21 @@ class Config {
     return {}
   }
 
+  static qlabConfig(): { ip: string; port: number } {
+    const config = this.game()
+    return {
+      ip: config.qlabIp || "127.0.0.1",
+      port: config.qlabPort || 53000,
+    }
+  }
+
+  static saveQlabConfig(ip: string, port: number): void {
+    const config = this.game()
+    config.qlabIp = ip
+    config.qlabPort = port
+    fs.writeFileSync(getPath("game.json"), JSON.stringify(config, null, 2))
+  }
+
   static quizz() {
     const isExists = fs.existsSync(getPath("quizz"))
 
@@ -123,6 +138,26 @@ class Config {
       console.error("Failed to read quizz config:", error)
 
       return []
+    }
+  }
+
+  static saveQuizz(id: string | undefined, data: Quizz): QuizzWithId {
+    const slug = id || data.subject
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "")
+      .substring(0, 50) || `quiz-${Date.now()}`
+
+    fs.writeFileSync(getPath(`quizz/${slug}.json`), JSON.stringify(data, null, 2))
+
+    return { id: slug, ...data }
+  }
+
+  static deleteQuizz(id: string): void {
+    const filePath = getPath(`quizz/${id}.json`)
+
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath)
     }
   }
 }

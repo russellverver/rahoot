@@ -1,6 +1,5 @@
 "use client"
 
-import logo from "@rahoot/web/assets/logo.svg"
 import Loader from "@rahoot/web/components/Loader"
 import { useSocket } from "@rahoot/web/contexts/socketProvider"
 import Image from "next/image"
@@ -16,13 +15,16 @@ const AuthLayout = ({ children }: PropsWithChildren) => {
 
   if (!isConnected) {
     return (
-      <section className="relative flex min-h-dvh flex-col items-center justify-center">
-        <div className="absolute h-full w-full overflow-hidden">
-          <div className="bg-primary/15 absolute -top-[15vmin] -left-[15vmin] min-h-[75vmin] min-w-[75vmin] rounded-full"></div>
-          <div className="bg-primary/15 absolute -right-[15vmin] -bottom-[15vmin] min-h-[75vmin] min-w-[75vmin] rotate-45"></div>
-        </div>
-
-        <Image src={logo} className="mb-6 h-32" alt="logo" />
+      <section className="relative flex min-h-dvh flex-col items-center justify-start pt-16">
+        <video
+          className="pointer-events-none fixed top-0 left-0 -z-10 h-full w-full object-cover"
+          src="/background.mov"
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+        <Image src="/logo.png" width={320} height={128} className="mb-8" alt="Preston Palace" />
         <Loader className="h-23" />
         <h2 className="mt-2 text-center text-2xl font-bold text-white drop-shadow-lg md:text-3xl">
           Loading...
@@ -33,12 +35,15 @@ const AuthLayout = ({ children }: PropsWithChildren) => {
 
   return (
     <section className="relative flex min-h-dvh flex-col items-center justify-center">
-      <div className="absolute h-full w-full overflow-hidden">
-        <div className="bg-primary/15 absolute -top-[15vmin] -left-[15vmin] min-h-[75vmin] min-w-[75vmin] rounded-full"></div>
-        <div className="bg-primary/15 absolute -right-[15vmin] -bottom-[15vmin] min-h-[75vmin] min-w-[75vmin] rotate-45"></div>
-      </div>
-
-      <Image src={logo} className="mb-6 h-32" alt="logo" />
+      <video
+        className="pointer-events-none fixed top-0 left-0 -z-10 h-full w-full object-cover"
+        src="/background.mov"
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
+      <Image src="/logo.png" width={320} height={128} className="mb-8" alt="Preston Palace" />
       {children}
     </section>
   )

@@ -130,6 +130,59 @@ io.on("connection", (socket) => {
     withGame(gameId, socket, (game) => game.showLeaderboard()),
   )
 
+  socket.on("spectator:join", ({ gameId }) => {
+    const game = registry.getGameById(gameId)
+
+    if (!game) {
+      return
+    }
+
+    socket.join(game.spectatorRoom)
+    game.broadcastSpectatorLeaderboard()
+  })
+
+  socket.on("spectator:joinByCode", (inviteCode) => {
+    const game = registry.getGameByInviteCode(inviteCode)
+
+    if (!game) {
+      socket.emit("game:errorMessage", "Game niet gevonden")
+
+      return
+    }
+
+    socket.join(game.spectatorRoom)
+    game.broadcastSpectatorLeaderboard()
+  })
+
+  socket.on("manager:saveQuizz", ({ id, quiz }) => {
+    try {
+      const saved = Config.saveQuizz(id, quiz)
+      socket.emit("manager:quizzSaved", saved)
+    } catch (error) {
+      console.error("Failed to save quiz:", error)
+      socket.emit("manager:errorMessage", "Opslaan mislukt")
+    }
+  })
+
+  socket.on("manager:deleteQuizz", (id) => {
+    try {
+      Config.deleteQuizz(id)
+      socket.emit("manager:quizzDeleted", id)
+    } catch (error) {
+      console.error("Failed to delete quiz:", error)
+      socket.emit("manager:errorMessage", "Verwijderen mislukt")
+    }
+  })
+
+  socket.on("manager:getQlabConfig", () => {
+    socket.emit("manager:qlabConfig", Config.qlabConfig())
+  })
+
+  socket.on("manager:setQlabConfig", ({ ip, port }) => {
+    Config.saveQlabConfig(ip, port)
+    socket.emit("manager:qlabConfig", { ip, port })
+  })
+
   socket.on("disconnect", () => {
     console.log(`A user disconnected : ${socket.id}`)
 

@@ -2,6 +2,8 @@ import { Answer, Player, Quizz } from "@rahoot/common/types/game"
 import { Server, Socket } from "@rahoot/common/types/game/socket"
 import { Status, STATUS, StatusDataMap } from "@rahoot/common/types/game/status"
 import { usernameValidator } from "@rahoot/common/validators/auth"
+import Config from "@rahoot/socket/services/config"
+import { sendQlabCue } from "@rahoot/socket/services/qlab"
 import Registry from "@rahoot/socket/services/registry"
 import { createInviteCode, timeToPoint } from "@rahoot/socket/utils/game"
 import sleep from "@rahoot/socket/utils/sleep"
@@ -43,6 +45,8 @@ class Game {
     active: boolean
     ms: number
   }
+
+  private inviteCodeInterval: ReturnType<typeof setInterval> | null = null
 
   constructor(io: Server, socket: Socket, quizz: Quizz) {
     if (!io) {
@@ -94,6 +98,14 @@ class Game {
       inviteCode: roomInvite,
     })
 
+    const rotatePinCode = () => {
+      this.inviteCode = createInviteCode()
+      const expiresAt = Date.now() + 30_000
+      this.io.to(this.manager.id).emit("manager:inviteCodeUpdate", { code: this.inviteCode, expiresAt })
+    }
+
+    this.inviteCodeInterval = setInterval(rotatePinCode, 30_000)
+
     console.log(
       `New game created: ${roomInvite} subject: ${this.quizz.subject}`,
     )
@@ -119,6 +131,19 @@ class Game {
     }
 
     this.io.to(target).emit("game:status", statusData)
+  }
+
+  get spectatorRoom() {
+    return `${this.gameId}-spectator`
+  }
+
+  broadcastSpectatorLeaderboard() {
+    this.io.to(this.spectatorRoom).emit("spectator:leaderboard", {
+      players: [...this.players]
+        .sort((a, b) => b.points - a.points)
+        .map(({ id, username, points }) => ({ id, username, points })),
+      subject: this.quizz.subject,
+    })
   }
 
   join(socket: Socket, username: string) {
@@ -156,6 +181,7 @@ class Game {
     this.io.to(this.gameId).emit("game:totalPlayers", this.players.length)
 
     socket.emit("game:successJoin", this.gameId)
+    this.broadcastSpectatorLeaderboard()
   }
 
   kickPlayer(socket: Socket, playerId: string) {
@@ -313,6 +339,11 @@ class Game {
 
     this.started = true
 
+    if (this.inviteCodeInterval) {
+      clearInterval(this.inviteCodeInterval)
+      this.inviteCodeInterval = null
+    }
+
     this.broadcastStatus(STATUS.SHOW_START, {
       time: 3,
       subject: this.quizz.subject,
@@ -357,6 +388,9 @@ class Game {
       image: question.image,
       cooldown: question.cooldown,
     })
+
+    const qlab = Config.qlabConfig()
+    sendQlabCue(this.round.currentQuestion + 1, qlab.ip, qlab.port)
 
     await sleep(question.cooldown)
 
@@ -447,6 +481,7 @@ class Game {
     this.tempOldLeaderboard = oldLeaderboard
 
     this.round.playersAnswers = []
+    this.broadcastSpectatorLeaderboard()
   }
   selectAnswer(socket: Socket, answerId: number) {
     const player = this.players.find((player) => player.id === socket.id)

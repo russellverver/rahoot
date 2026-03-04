@@ -1,7 +1,6 @@
 "use client"
 
 import { Status } from "@rahoot/common/types/game/status"
-import background from "@rahoot/web/assets/background.webp"
 import Button from "@rahoot/web/components/Button"
 import Loader from "@rahoot/web/components/Loader"
 import { useEvent, useSocket } from "@rahoot/web/contexts/socketProvider"
@@ -9,7 +8,6 @@ import { usePlayerStore } from "@rahoot/web/stores/player"
 import { useQuestionStore } from "@rahoot/web/stores/question"
 import { MANAGER_SKIP_BTN } from "@rahoot/web/utils/constants"
 import clsx from "clsx"
-import Image from "next/image"
 import { PropsWithChildren, useEffect, useState } from "react"
 
 type Props = PropsWithChildren & {
@@ -43,12 +41,23 @@ const GameWrapper = ({ children, statusName, onNext, manager }: Props) => {
 
   return (
     <section className="relative flex min-h-dvh w-full flex-col justify-between">
-      <div className="fixed top-0 left-0 -z-10 h-full w-full bg-orange-600 opacity-70">
-        <Image
-          className="pointer-events-none h-full w-full object-cover opacity-60"
-          src={background}
-          alt="background"
-        />
+      <div className="fixed top-0 left-0 -z-10 h-full w-full">
+        {manager ? (
+          <video
+            className="pointer-events-none h-full w-full object-cover"
+            src="/background.mov"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        ) : (
+          <img
+            className="pointer-events-none h-full w-full object-cover"
+            src="/player-bg.png"
+            alt=""
+          />
+        )}
       </div>
 
       {!isConnected && !statusName ? (

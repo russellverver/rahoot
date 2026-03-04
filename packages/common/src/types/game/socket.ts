@@ -61,6 +61,11 @@ export interface ServerToClientEvents {
   "manager:removePlayer": (_playerId: string) => void
   "manager:errorMessage": (_message: string) => void
   "manager:playerKicked": (_playerId: string) => void
+  "manager:qlabConfig": (_data: { ip: string; port: number }) => void
+  "manager:quizzSaved": (_quiz: QuizzWithId) => void
+  "manager:quizzDeleted": (_id: string) => void
+  "manager:inviteCodeUpdate": (_data: { code: string; expiresAt: number }) => void
+  "spectator:leaderboard": (_data: { players: { id: string; username: string; points: number }[]; subject: string }) => void
 }
 
 export interface ClientToServerEvents {
@@ -81,6 +86,13 @@ export interface ClientToServerEvents {
   "player:selectedAnswer": (
     _message: MessageWithoutStatus<{ answerKey: number }>
   ) => void
+
+  "manager:saveQuizz": (_data: { id?: string; quiz: import(".").Quizz }) => void
+  "manager:deleteQuizz": (_id: string) => void
+  "manager:getQlabConfig": () => void
+  "manager:setQlabConfig": (_data: { ip: string; port: number }) => void
+  "spectator:join": (_data: { gameId: string }) => void
+  "spectator:joinByCode": (_inviteCode: string) => void
 
   // Common
   disconnect: () => void
