@@ -16,10 +16,10 @@ import Square from "@rahoot/web/components/icons/Square"
 import Triangle from "@rahoot/web/components/icons/Triangle"
 
 export const ANSWERS_COLORS = [
-  "bg-red-500",
-  "bg-blue-500",
-  "bg-yellow-500",
-  "bg-green-500",
+  "answer-a",
+  "answer-b",
+  "answer-c",
+  "answer-d",
 ]
 
 export const ANSWERS_ICONS = [Triangle, Rhombus, Circle, Square]

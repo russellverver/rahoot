@@ -5,6 +5,8 @@ import { useSocket } from "@rahoot/web/contexts/socketProvider"
 import Image from "next/image"
 import { PropsWithChildren, useEffect } from "react"
 
+const gradientBg = "linear-gradient(160deg, #0d0520 0%, #1a0a35 50%, #05101a 100%)"
+
 const AuthLayout = ({ children }: PropsWithChildren) => {
   const { isConnected, connect } = useSocket()
   useEffect(() => {
@@ -15,16 +17,11 @@ const AuthLayout = ({ children }: PropsWithChildren) => {
 
   if (!isConnected) {
     return (
-      <section className="relative flex min-h-dvh flex-col items-center justify-start pt-16">
-        <video
-          className="pointer-events-none fixed top-0 left-0 -z-10 h-full w-full object-cover"
-          src="/background.mov"
-          autoPlay
-          loop
-          muted
-          playsInline
-        />
-        <Image src="/logo.png" width={320} height={128} className="mb-8" alt="Preston Palace" />
+      <section
+        className="relative flex min-h-dvh flex-col items-center justify-start pt-16"
+        style={{ background: gradientBg }}
+      >
+        <Image src="/logo.png" width={280} height={112} className="mb-8" alt="Preston Palace" />
         <Loader className="h-23" />
         <h2 className="mt-2 text-center text-2xl font-bold text-white drop-shadow-lg md:text-3xl">
           Loading...
@@ -34,16 +31,10 @@ const AuthLayout = ({ children }: PropsWithChildren) => {
   }
 
   return (
-    <section className="relative flex min-h-dvh flex-col items-center justify-center">
-      <video
-        className="pointer-events-none fixed top-0 left-0 -z-10 h-full w-full object-cover"
-        src="/background.mov"
-        autoPlay
-        loop
-        muted
-        playsInline
-      />
-      <Image src="/logo.png" width={320} height={128} className="mb-8" alt="Preston Palace" />
+    <section
+      className="relative flex min-h-dvh flex-col items-center justify-center"
+      style={{ background: gradientBg }}
+    >
       {children}
     </section>
   )

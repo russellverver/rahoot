@@ -52,10 +52,9 @@ const GameWrapper = ({ children, statusName, onNext, manager }: Props) => {
             playsInline
           />
         ) : (
-          <img
-            className="pointer-events-none h-full w-full object-cover"
-            src="/player-bg.png"
-            alt=""
+          <div
+            className="pointer-events-none h-full w-full"
+            style={{ background: "linear-gradient(135deg, #1a1a3e 0%, #2d1b69 50%, #0f3460 100%)" }}
           />
         )}
       </div>
