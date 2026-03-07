@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d0520"/>
+      <stop offset="50%" stop-color="#1a0a35"/>
+      <stop offset="100%" stop-color="#05101a"/>
+    </linearGradient>
+
+    <linearGradient id="headerPill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a1149"/>
+      <stop offset="100%" stop-color="#160a2a"/>
+    </linearGradient>
+
+    <linearGradient id="progress" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+
+    <filter id="softShadow" x="-40%" y="-40%" width="200%" height="220%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000000" flood-opacity="0.55"/>
+    </filter>
+
+    <filter id="glowPink" x="-50%" y="-50%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#f43f5e" flood-opacity="0.55"/>
+    </filter>
+    <filter id="glowPurple" x="-50%" y="-50%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#8b5cf6" flood-opacity="0.55"/>
+    </filter>
+    <filter id="glowCyan" x="-50%" y="-50%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#06b6d4" flood-opacity="0.55"/>
+    </filter>
+    <filter id="glowOrange" x="-50%" y="-50%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#f59e0b" flood-opacity="0.55"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+
+  <!-- Spotlights (same vibe as current app) -->
+  <g opacity="0.3">
+    <polygon points="160,-40 230,520 260,520 205,-40" fill="#f43f5e"/>
+    <polygon points="490,-40 580,520 610,520 540,-40" fill="#8b5cf6"/>
+    <polygon points="860,-40 930,520 965,520 910,-40" fill="#06b6d4"/>
+    <polygon points="1210,-40 1285,520 1315,520 1258,-40" fill="#f59e0b"/>
+  </g>
+
+  <!-- Scanline -->
+  <rect x="0" y="216" width="1600" height="2" fill="#8b5cf6" fill-opacity="0.35"/>
+
+  <!-- Top bar -->
+  <g>
+    <!-- EQ bars left -->
+    <g transform="translate(120 72)">
+      <rect x="0" y="16" width="4" height="18" rx="2" fill="#8b5cf6"/>
+      <rect x="8" y="8" width="4" height="26" rx="2" fill="#8b5cf6"/>
+      <rect x="16" y="12" width="4" height="22" rx="2" fill="#8b5cf6"/>
+      <rect x="24" y="4" width="4" height="30" rx="2" fill="#8b5cf6"/>
+      <rect x="32" y="14" width="4" height="20" rx="2" fill="#8b5cf6"/>
+    </g>
+
+    <text x="200" y="104" fill="rgba(245,230,200,0.7)" font-size="26" letter-spacing="4" font-family="Arial, Helvetica, sans-serif">
+      MUZIEK QUIZ
+    </text>
+
+    <g transform="translate(420 72)">
+      <rect x="0" y="16" width="4" height="18" rx="2" fill="#06b6d4"/>
+      <rect x="8" y="8" width="4" height="26" rx="2" fill="#06b6d4"/>
+      <rect x="16" y="12" width="4" height="22" rx="2" fill="#06b6d4"/>
+      <rect x="24" y="4" width="4" height="30" rx="2" fill="#06b6d4"/>
+      <rect x="32" y="14" width="4" height="20" rx="2" fill="#06b6d4"/>
+    </g>
+
+    <!-- timer -->
+    <g transform="translate(1380 96)">
+      <circle r="52" fill="#151021" stroke="#8b5cf6" stroke-width="5"/>
+      <circle r="38" fill="none" stroke="#8b5cf6" stroke-opacity="0.75" stroke-width="8" stroke-dasharray="178 70"/>
+      <text x="0" y="10" text-anchor="middle" fill="#ffffff" font-size="38" font-weight="700" font-family="Arial, Helvetica, sans-serif">12</text>
+      <text x="0" y="31" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="13" letter-spacing="2" font-family="Arial, Helvetica, sans-serif">SEC</text>
+    </g>
+  </g>
+
+  <!-- Progress bar -->
+  <rect x="90" y="146" width="1280" height="8" rx="4" fill="rgba(255,255,255,0.12)"/>
+  <rect x="90" y="146" width="900" height="8" rx="4" fill="url(#progress)"/>
+
+  <!-- Question area -->
+  <g filter="url(#softShadow)">
+    <rect x="140" y="188" width="1150" height="110" rx="14" fill="rgba(16,10,26,0.8)" stroke="rgba(139,92,246,0.45)"/>
+    <text x="180" y="235" fill="#ffffff" font-size="44" font-family="Arial, Helvetica, sans-serif" font-weight="700">
+      Welke artiest hoort bij deze track?
+    </text>
+    <text x="180" y="270" fill="rgba(245,230,200,0.62)" font-size="19" letter-spacing="2" font-family="Arial, Helvetica, sans-serif">
+      Zelfde Rahoot-stijl, nu met subtiele 3D diepte
+    </text>
+  </g>
+
+  <!-- Answer A (current style + subtle 3D extrusion) -->
+  <g transform="translate(120 332)" filter="url(#softShadow)">
+    <polygon points="16,84 1144,84 1160,96 32,96" fill="#521120" fill-opacity="0.65"/>
+    <polygon points="1144,8 1160,20 1160,96 1144,84" fill="#6e182c" fill-opacity="0.75"/>
+    <rect x="16" y="8" width="1128" height="76" rx="10" fill="rgba(30,15,0,0.74)" stroke="#f43f5e55" stroke-width="2"/>
+    <circle cx="56" cy="46" r="28" fill="#1b0a00" stroke="rgba(255,150,50,0.25)"/>
+    <circle cx="56" cy="46" r="19" fill="none" stroke="rgba(255,150,50,0.16)"/>
+    <circle cx="56" cy="46" r="12" fill="#f43f5e" filter="url(#glowPink)"/>
+    <text x="56" y="52" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700" font-family="Arial, Helvetica, sans-serif">A</text>
+    <text x="106" y="38" fill="#f43f5e" font-size="12" letter-spacing="3" font-family="Arial, Helvetica, sans-serif">SIDE A</text>
+    <text x="106" y="64" fill="#f5e6c8" font-size="28" font-weight="700" font-family="Arial, Helvetica, sans-serif">Dua Lipa</text>
+    <text x="1115" y="54" text-anchor="end" fill="#f5e6c8" font-size="24" font-family="Arial, Helvetica, sans-serif">▶</text>
+  </g>
+
+  <!-- Answer B -->
+  <g transform="translate(120 444)" filter="url(#softShadow)">
+    <polygon points="16,84 1144,84 1160,96 32,96" fill="#23133f" fill-opacity="0.62"/>
+    <polygon points="1144,8 1160,20 1160,96 1144,84" fill="#33205f" fill-opacity="0.75"/>
+    <rect x="16" y="8" width="1128" height="76" rx="10" fill="rgba(30,15,0,0.74)" stroke="#8b5cf655" stroke-width="2"/>
+    <circle cx="56" cy="46" r="28" fill="#160f22" stroke="rgba(139,92,246,0.35)"/>
+    <circle cx="56" cy="46" r="19" fill="none" stroke="rgba(139,92,246,0.16)"/>
+    <circle cx="56" cy="46" r="12" fill="#8b5cf6" filter="url(#glowPurple)"/>
+    <text x="56" y="52" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700" font-family="Arial, Helvetica, sans-serif">B</text>
+    <text x="106" y="38" fill="#8b5cf6" font-size="12" letter-spacing="3" font-family="Arial, Helvetica, sans-serif">SIDE B</text>
+    <text x="106" y="64" fill="#f5e6c8" font-size="28" font-weight="700" font-family="Arial, Helvetica, sans-serif">The Weeknd</text>
+  </g>
+
+  <!-- Answer C -->
+  <g transform="translate(120 556)" filter="url(#softShadow)">
+    <polygon points="16,84 1144,84 1160,96 32,96" fill="#0a2b33" fill-opacity="0.6"/>
+    <polygon points="1144,8 1160,20 1160,96 1144,84" fill="#0b4451" fill-opacity="0.72"/>
+    <rect x="16" y="8" width="1128" height="76" rx="10" fill="rgba(30,15,0,0.74)" stroke="#06b6d455" stroke-width="2"/>
+    <circle cx="56" cy="46" r="28" fill="#0d171c" stroke="rgba(6,182,212,0.35)"/>
+    <circle cx="56" cy="46" r="19" fill="none" stroke="rgba(6,182,212,0.16)"/>
+    <circle cx="56" cy="46" r="12" fill="#06b6d4" filter="url(#glowCyan)"/>
+    <text x="56" y="52" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700" font-family="Arial, Helvetica, sans-serif">C</text>
+    <text x="106" y="38" fill="#06b6d4" font-size="12" letter-spacing="3" font-family="Arial, Helvetica, sans-serif">SIDE C</text>
+    <text x="106" y="64" fill="#f5e6c8" font-size="28" font-weight="700" font-family="Arial, Helvetica, sans-serif">Bruno Mars</text>
+  </g>
+
+  <!-- Answer D -->
+  <g transform="translate(120 668)" filter="url(#softShadow)">
+    <polygon points="16,84 1144,84 1160,96 32,96" fill="#3f2a07" fill-opacity="0.62"/>
+    <polygon points="1144,8 1160,20 1160,96 1144,84" fill="#5b3a08" fill-opacity="0.74"/>
+    <rect x="16" y="8" width="1128" height="76" rx="10" fill="rgba(30,15,0,0.74)" stroke="#f59e0b55" stroke-width="2"/>
+    <circle cx="56" cy="46" r="28" fill="#1b1409" stroke="rgba(245,158,11,0.35)"/>
+    <circle cx="56" cy="46" r="19" fill="none" stroke="rgba(245,158,11,0.16)"/>
+    <circle cx="56" cy="46" r="12" fill="#f59e0b" filter="url(#glowOrange)"/>
+    <text x="56" y="52" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700" font-family="Arial, Helvetica, sans-serif">D</text>
+    <text x="106" y="38" fill="#f59e0b" font-size="12" letter-spacing="3" font-family="Arial, Helvetica, sans-serif">SIDE D</text>
+    <text x="106" y="64" fill="#f5e6c8" font-size="28" font-weight="700" font-family="Arial, Helvetica, sans-serif">Ariana Grande</text>
+  </g>
+
+  <!-- Right side: leaderboard / podium in existing visual language -->
+  <g transform="translate(1290 312)" filter="url(#softShadow)">
+    <rect x="0" y="0" width="270" height="326" rx="16" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/>
+    <text x="20" y="42" fill="#ffffff" font-size="25" font-family="Arial, Helvetica, sans-serif" font-weight="700">LEADERBOARD</text>
+
+    <rect x="16" y="62" width="238" height="62" rx="10" fill="rgba(245,158,11,0.1)" stroke="rgba(245,158,11,0.4)"/>
+    <text x="28" y="99" fill="#f59e0b" font-size="24" font-family="Arial, Helvetica, sans-serif">👑</text>
+    <text x="70" y="99" fill="#f5e6c8" font-size="22" font-family="Arial, Helvetica, sans-serif">Luca</text>
+    <text x="240" y="99" text-anchor="end" fill="#f59e0b" font-size="22" font-family="Arial, Helvetica, sans-serif">2840</text>
+
+    <rect x="24" y="136" width="230" height="56" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
+    <text x="38" y="170" fill="#9ca3af" font-size="20" font-family="Arial, Helvetica, sans-serif">2</text>
+    <text x="70" y="170" fill="#f5e6c8" font-size="20" font-family="Arial, Helvetica, sans-serif">Mila</text>
+    <text x="240" y="170" text-anchor="end" fill="rgba(245,230,200,0.75)" font-size="20" font-family="Arial, Helvetica, sans-serif">2690</text>
+
+    <rect x="32" y="202" width="222" height="50" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
+    <text x="46" y="232" fill="#b45309" font-size="18" font-family="Arial, Helvetica, sans-serif">3</text>
+    <text x="70" y="232" fill="#f5e6c8" font-size="18" font-family="Arial, Helvetica, sans-serif">Noah</text>
+    <text x="240" y="232" text-anchor="end" fill="rgba(245,230,200,0.75)" font-size="18" font-family="Arial, Helvetica, sans-serif">2520</text>
+
+    <!-- tiny podium -->
+    <g transform="translate(18 266)">
+      <polygon points="0,50 228,50 206,76 18,76" fill="#0f0b1b"/>
+      <rect x="26" y="30" width="54" height="20" fill="#1f1633" stroke="#8b5cf6"/>
+      <rect x="88" y="14" width="64" height="36" fill="#2f1d08" stroke="#f59e0b"/>
+      <rect x="160" y="36" width="50" height="14" fill="#10222c" stroke="#06b6d4"/>
+      <text x="53" y="47" text-anchor="middle" fill="#d9cbff" font-size="14" font-family="Arial, Helvetica, sans-serif">2</text>
+      <text x="120" y="37" text-anchor="middle" fill="#ffe1a8" font-size="14" font-family="Arial, Helvetica, sans-serif">1</text>
+      <text x="185" y="47" text-anchor="middle" fill="#bfeef7" font-size="14" font-family="Arial, Helvetica, sans-serif">3</text>
+    </g>
+  </g>
+</svg>

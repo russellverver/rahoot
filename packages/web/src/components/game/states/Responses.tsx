@@ -2,12 +2,8 @@
 
 import { ManagerStatusDataMap } from "@rahoot/common/types/game/status"
 import AnswerButton from "@rahoot/web/components/AnswerButton"
-import {
-  ANSWERS_COLORS,
-  ANSWERS_ICONS,
-  SFX_ANSWERS_MUSIC,
-  SFX_RESULTS_SOUND,
-} from "@rahoot/web/utils/constants"
+import { ANSWERS_COLORS, ANSWERS_ICONS } from "@rahoot/web/utils/answers"
+import { SFX_ANSWERS_MUSIC, SFX_RESULTS_SOUND } from "@rahoot/web/utils/sfx"
 import { calculatePercentages } from "@rahoot/web/utils/score"
 import clsx from "clsx"
 import { useEffect, useState } from "react"

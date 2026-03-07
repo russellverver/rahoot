@@ -23,13 +23,6 @@ const GameWrapper = ({ children, statusName, onNext, manager }: Props) => {
   const [isDisabled, setIsDisabled] = useState(false)
   const next = statusName ? MANAGER_SKIP_BTN[statusName] : null
 
-  useEvent("game:updateQuestion", ({ current, total }) => {
-    setQuestionStates({
-      current,
-      total,
-    })
-  })
-
   useEffect(() => {
     setIsDisabled(false)
   }, [statusName])
@@ -38,6 +31,13 @@ const GameWrapper = ({ children, statusName, onNext, manager }: Props) => {
     setIsDisabled(true)
     onNext?.()
   }
+
+  useEvent("game:updateQuestion", ({ current, total }) => {
+    setQuestionStates({
+      current,
+      total,
+    })
+  })
 
   return (
     <section className="relative flex min-h-dvh w-full flex-col justify-between">
@@ -66,32 +66,133 @@ const GameWrapper = ({ children, statusName, onNext, manager }: Props) => {
         </div>
       ) : (
         <>
-          <div className="flex w-full justify-between p-4">
-            {questionStates && (
-              <div className="shadow-inset flex items-center rounded-md bg-white p-2 px-4 text-lg font-bold text-black">
-                {`${questionStates.current} / ${questionStates.total}`}
-              </div>
-            )}
-
-            {manager && next && (
+          {manager && next && (
+            <div className="flex w-full justify-end p-4">
               <Button
-                className={clsx("self-end bg-white px-4 text-black!", {
+                className={clsx("bg-white px-4 text-black!", {
                   "pointer-events-none": isDisabled,
                 })}
                 onClick={handleNext}
               >
                 {next}
               </Button>
-            )}
-          </div>
-
+            </div>
+          )}
           {children}
 
-          {!manager && (
-            <div className="z-50 flex items-center justify-between bg-white px-4 py-2 text-lg font-bold text-white">
-              <p className="text-gray-800">{player?.username}</p>
-              <div className="rounded-sm bg-gray-800 px-3 py-1 text-lg">
-                {player?.points}
+          {!manager && player && (
+            <div
+              style={{
+                position: "fixed",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                zIndex: 50,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "10px 16px",
+                background: "rgba(10, 5, 30, 0.75)",
+                backdropFilter: "blur(12px)",
+                borderTop: "1px solid rgba(139, 92, 246, 0.25)",
+                gap: "12px",
+              }}
+            >
+              {/* Naam */}
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0 }}>
+                <div
+                  style={{
+                    width: "8px",
+                    height: "8px",
+                    borderRadius: "50%",
+                    background: "#4ade80",
+                    boxShadow: "0 0 8px #4ade80",
+                    flexShrink: 0,
+                  }}
+                />
+                <span
+                  style={{
+                    fontFamily: "var(--font-bebas, 'Bebas Neue', monospace)",
+                    fontSize: "18px",
+                    letterSpacing: "2px",
+                    color: "rgba(245, 230, 200, 0.9)",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {player.username}
+                </span>
+              </div>
+
+              {/* Vraagnummer */}
+              {questionStates && (
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    flexShrink: 0,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "var(--font-bebas, 'Bebas Neue', monospace)",
+                      fontSize: "13px",
+                      letterSpacing: "2px",
+                      color: "rgba(139, 92, 246, 0.7)",
+                    }}
+                  >
+                    VRAAG
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-bebas, 'Bebas Neue', monospace)",
+                      fontSize: "20px",
+                      color: "white",
+                      lineHeight: 1,
+                    }}
+                  >
+                    {questionStates.current}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-bebas, 'Bebas Neue', monospace)",
+                      fontSize: "13px",
+                      color: "rgba(255,255,255,0.3)",
+                    }}
+                  >
+                    / {questionStates.total}
+                  </span>
+                </div>
+              )}
+
+              {/* Punten */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  flexShrink: 0,
+                  padding: "4px 12px",
+                  borderRadius: "999px",
+                  background: "rgba(139, 92, 246, 0.15)",
+                  border: "1px solid rgba(139, 92, 246, 0.35)",
+                  boxShadow: "0 0 12px rgba(139, 92, 246, 0.2)",
+                }}
+              >
+                <span style={{ fontSize: "14px" }}>⭐</span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-bebas, 'Bebas Neue', monospace)",
+                    fontSize: "20px",
+                    color: "white",
+                    letterSpacing: "1px",
+                    lineHeight: 1,
+                  }}
+                >
+                  {player.points}
+                </span>
               </div>
             </div>
           )}

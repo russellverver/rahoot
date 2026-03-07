@@ -3,7 +3,7 @@
 import { CommonStatusDataMap } from "@rahoot/common/types/game/status"
 import { useEvent, useSocket } from "@rahoot/web/contexts/socketProvider"
 import { usePlayerStore } from "@rahoot/web/stores/player"
-import { SFX_ANSWERS_MUSIC, SFX_ANSWERS_SOUND } from "@rahoot/web/utils/constants"
+import { SFX_ANSWERS_MUSIC, SFX_ANSWERS_SOUND } from "@rahoot/web/utils/sfx"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import useSound from "use-sound"

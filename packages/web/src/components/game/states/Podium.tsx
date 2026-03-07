@@ -7,7 +7,7 @@ import {
   SFX_PODIUM_SECOND,
   SFX_PODIUM_THREE,
   SFX_SNEAR_ROOL,
-} from "@rahoot/web/utils/constants"
+} from "@rahoot/web/utils/sfx"
 import clsx from "clsx"
 import { useEffect, useState } from "react"
 import ReactConfetti from "react-confetti"

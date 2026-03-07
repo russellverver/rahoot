@@ -2,7 +2,7 @@
 
 import { CommonStatusDataMap } from "@rahoot/common/types/game/status"
 import { useEvent } from "@rahoot/web/contexts/socketProvider"
-import { SFX_BOUMP_SOUND } from "@rahoot/web/utils/constants"
+import { SFX_BOUMP_SOUND } from "@rahoot/web/utils/sfx"
 import clsx from "clsx"
 import { useState } from "react"
 import useSound from "use-sound"

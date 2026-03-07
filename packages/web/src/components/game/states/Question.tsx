@@ -1,7 +1,7 @@
 "use client"
 
 import { CommonStatusDataMap } from "@rahoot/common/types/game/status"
-import { SFX_SHOW_SOUND } from "@rahoot/web/utils/constants"
+import { SFX_SHOW_SOUND } from "@rahoot/web/utils/sfx"
 import { useEffect } from "react"
 import useSound from "use-sound"
 

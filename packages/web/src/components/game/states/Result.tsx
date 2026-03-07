@@ -2,7 +2,7 @@
 
 import { CommonStatusDataMap } from "@rahoot/common/types/game/status"
 import { usePlayerStore } from "@rahoot/web/stores/player"
-import { SFX_RESULTS_SOUND } from "@rahoot/web/utils/constants"
+import { SFX_RESULTS_SOUND } from "@rahoot/web/utils/sfx"
 import { useEffect } from "react"
 import useSound from "use-sound"
 

@@ -86,7 +86,7 @@ const ManagerGame = () => {
 
   switch (status?.name) {
     case STATUS.SHOW_ROOM:
-      component = <Room data={status.data} />
+      component = <Room data={status.data} onNext={handleSkip} />
 
       break
 
